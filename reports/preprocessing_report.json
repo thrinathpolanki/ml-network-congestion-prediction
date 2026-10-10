@@ -1,0 +1,80 @@
+{
+  "input": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\data\\raw\\synthetic_network_traffic.csv",
+  "clean_output": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\data\\processed\\clean_network_traffic.csv",
+  "horizon_steps": 6,
+  "location": {
+    "columns_present": [
+      "latitude",
+      "longitude",
+      "location"
+    ],
+    "rows_missing_position": 0,
+    "cells_with_one_fixed_position": true
+  },
+  "cleaning": {
+    "rows_in": 345319,
+    "rows_dropped_bad_timestamp_or_site": 0,
+    "invalid_values_nullified": {
+      "bandwidth_utilization_pct": 49,
+      "download_throughput_mbps": 64,
+      "latency_ms": 55
+    },
+    "duplicates_removed": 353,
+    "rows_inserted_for_gaps": 634,
+    "outliers_removed": {
+      "latency_ms": 213,
+      "packet_loss_pct": 285,
+      "jitter_ms": 8,
+      "download_throughput_mbps": 211,
+      "upload_throughput_mbps": 216
+    },
+    "cells_imputed": 29294,
+    "rows_with_unfilled_gaps": 2,
+    "rows_out": 345600,
+    "sites": 20
+  },
+  "split": {
+    "boundaries": {
+      "train_end_exclusive": "2026-02-11 23:35:00",
+      "val_end_exclusive": "2026-02-20 23:30:00",
+      "purge_steps": 6
+    },
+    "purged_rows": {
+      "train": 120,
+      "val": 120
+    },
+    "train": {
+      "rows": 241700,
+      "start": "2026-01-01 00:00:00",
+      "end": "2026-02-11 23:00:00",
+      "target_distribution": {
+        "0": 0.8657,
+        "1": 0.0899,
+        "2": 0.0378,
+        "3": 0.0065
+      }
+    },
+    "val": {
+      "rows": 51700,
+      "start": "2026-02-11 23:35:00",
+      "end": "2026-02-20 22:55:00",
+      "target_distribution": {
+        "0": 0.8556,
+        "1": 0.0932,
+        "2": 0.0445,
+        "3": 0.0067
+      }
+    },
+    "test": {
+      "rows": 51840,
+      "start": "2026-02-20 23:30:00",
+      "end": "2026-03-01 23:25:00",
+      "target_distribution": {
+        "0": 0.8806,
+        "1": 0.0798,
+        "2": 0.0354,
+        "3": 0.0043
+      }
+    }
+  }
+}
