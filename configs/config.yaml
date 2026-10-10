@@ -104,3 +104,26 @@ labeling:
     warning: 0.25
     congested: 0.45
     critical: 0.70
+
+# -----------------------------------------------------------------------------
+# Preprocessing
+# -----------------------------------------------------------------------------
+preprocessing:
+  clean_filename: clean_network_traffic.csv
+  max_gap_steps: 6              # interpolate gaps up to 6 steps (30 min); longer stay NaN
+  outlier:
+    enabled: true
+    window: 7                   # centred rolling window (steps) for the Hampel test
+    # Per-KPI sensitivity. n_sigmas = deviation threshold in robust sigmas;
+    # rel_floor = scale never below this fraction of the local median.
+    # Noisy, heavy-tailed KPIs get looser limits than smooth ones; chosen by
+    # measuring recovery against a clean twin of the synthetic data (see docs).
+    columns:
+      latency_ms:               {n_sigmas: 8.0, rel_floor: 0.30}
+      packet_loss_pct:          {n_sigmas: 8.0, rel_floor: 0.30}
+      jitter_ms:                {n_sigmas: 8.0, rel_floor: 0.30}
+      download_throughput_mbps: {n_sigmas: 5.0, rel_floor: 0.15}
+      upload_throughput_mbps:   {n_sigmas: 5.0, rel_floor: 0.15}
+  split:
+    train_frac: 0.70            # chronological: first 70 % of the time span
+    val_frac: 0.15              # next 15 %; remaining 15 % is the test set
