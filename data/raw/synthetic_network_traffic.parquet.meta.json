@@ -1,0 +1,110 @@
+{
+  "data_source": "synthetic",
+  "warning": "SIMULATED DATA. Not real telecom measurements; do not report results obtained on it as production network performance.",
+  "rows": 776688,
+  "sites": 30,
+  "time_range": [
+    "2026-01-01 00:00:00",
+    "2026-03-31 23:55:00"
+  ],
+  "seed": 42,
+  "generator_config": {
+    "n_sites": 20,
+    "start": "2026-01-01",
+    "end": "2026-03-02",
+    "congestion_intensity": 1.0,
+    "noise": {
+      "autocorr_minutes": 45,
+      "demand_sigma": 0.09,
+      "daily_sigma": 0.07
+    },
+    "events": {
+      "spike_rate_per_day": 0.6,
+      "spike_duration_minutes": [
+        10,
+        45
+      ],
+      "spike_magnitude": [
+        1.25,
+        1.9
+      ],
+      "sustained_rate_per_day": 0.15,
+      "sustained_duration_minutes": [
+        120,
+        360
+      ],
+      "sustained_magnitude": [
+        1.15,
+        1.4
+      ]
+    },
+    "data_quality": {
+      "inject_issues": true,
+      "anomaly_rate": 0.002,
+      "missing_value_rate": 0.004,
+      "duplicate_row_rate": 0.001,
+      "invalid_value_rate": 0.0005,
+      "missing_row_rate": 0.002
+    },
+    "location": {
+      "center_lat": 16.343976,
+      "center_lon": 80.524684,
+      "radius_km": {
+        "urban_core": 1.5,
+        "business_district": 2.5,
+        "urban_residential": 5.0,
+        "suburban": 10.0,
+        "rural": 18.0
+      }
+    },
+    "regions": {
+      "urban_core": {
+        "share": 0.2,
+        "profile": "mixed",
+        "capacity_mbps": 1000,
+        "users_at_capacity": 600,
+        "peak_load": 1.05,
+        "base_latency_ms": 18,
+        "sinr_db": 14
+      },
+      "urban_residential": {
+        "share": 0.25,
+        "profile": "residential",
+        "capacity_mbps": 800,
+        "users_at_capacity": 450,
+        "peak_load": 0.98,
+        "base_latency_ms": 22,
+        "sinr_db": 15
+      },
+      "business_district": {
+        "share": 0.15,
+        "profile": "business",
+        "capacity_mbps": 900,
+        "users_at_capacity": 500,
+        "peak_load": 1.0,
+        "base_latency_ms": 16,
+        "sinr_db": 17
+      },
+      "suburban": {
+        "share": 0.25,
+        "profile": "residential",
+        "capacity_mbps": 500,
+        "users_at_capacity": 250,
+        "peak_load": 0.8,
+        "base_latency_ms": 28,
+        "sinr_db": 13
+      },
+      "rural": {
+        "share": 0.15,
+        "profile": "residential",
+        "capacity_mbps": 200,
+        "users_at_capacity": 90,
+        "peak_load": 0.6,
+        "base_latency_ms": 40,
+        "sinr_db": 9
+      }
+    }
+  },
+  "sampling_freq": "5min",
+  "generated_at_utc": "2026-10-10T00:14:40+00:00"
+}
