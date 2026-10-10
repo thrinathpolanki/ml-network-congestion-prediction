@@ -1,0 +1,106 @@
+# =============================================================================
+# Central configuration. Override any value with an environment variable:
+#   NCP_<SECTION>__<KEY>=value   e.g.  NCP_PREDICTION__HORIZON_MINUTES=60
+# =============================================================================
+project:
+  name: ai-network-congestion-prediction
+  seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  sample_dir: data/sample
+  models_dir: models
+  reports_dir: reports
+  logs_dir: logs
+
+logging:
+  level: INFO
+  file: app.log
+  max_bytes: 5000000
+  backup_count: 3
+
+data:
+  sampling_freq: "5min"                 # pandas offset alias
+  raw_filename: synthetic_network_traffic.csv
+  data_source_label: synthetic          # written into every generated row
+
+prediction:
+  horizon_minutes: 30                   # model predicts the state at t + horizon
+
+# -----------------------------------------------------------------------------
+# Synthetic data generator (SIMULATED DATA - not real telecom measurements)
+# -----------------------------------------------------------------------------
+generator:
+  n_sites: 20
+  start: "2026-01-01"
+  end: "2026-03-02"                     # exclusive
+  congestion_intensity: 1.0             # >1 = busier network, <1 = quieter
+  noise:
+    autocorr_minutes: 45                # time constant of AR(1) demand noise
+    demand_sigma: 0.09                  # stationary std of log-demand noise
+    daily_sigma: 0.07                   # day-to-day level variation
+  events:
+    spike_rate_per_day: 0.6            # short sudden surges (per site)
+    spike_duration_minutes: [10, 45]
+    spike_magnitude: [1.25, 1.9]        # multiplier on offered load
+    sustained_rate_per_day: 0.15        # long high-utilisation episodes
+    sustained_duration_minutes: [120, 360]
+    sustained_magnitude: [1.15, 1.4]
+  data_quality:
+    inject_issues: true                 # create dirty data for the cleaning phase
+    anomaly_rate: 0.002                 # sensor/collector glitches (per row)
+    missing_value_rate: 0.004           # per metric cell
+    duplicate_row_rate: 0.001
+    invalid_value_rate: 0.0005          # impossible values (negative, >100 %)
+    missing_row_rate: 0.002             # dropped timestamps (gaps)
+  location:                             # cells are placed around this centre (change to your own city)
+    center_lat: 16.343976
+    center_lon: 80.524684
+    radius_km: {urban_core: 1.5, business_district: 2.5, urban_residential: 5.0, suburban: 10.0, rural: 18.0}
+  regions:
+    urban_core:
+      {share: 0.20, profile: mixed,       capacity_mbps: 1000, users_at_capacity: 600, peak_load: 1.05, base_latency_ms: 18, sinr_db: 14}
+    urban_residential:
+      {share: 0.25, profile: residential, capacity_mbps: 800,  users_at_capacity: 450, peak_load: 0.98, base_latency_ms: 22, sinr_db: 15}
+    business_district:
+      {share: 0.15, profile: business,    capacity_mbps: 900,  users_at_capacity: 500, peak_load: 1.00, base_latency_ms: 16, sinr_db: 17}
+    suburban:
+      {share: 0.25, profile: residential, capacity_mbps: 500,  users_at_capacity: 250, peak_load: 0.80, base_latency_ms: 28, sinr_db: 13}
+    rural:
+      {share: 0.15, profile: residential, capacity_mbps: 200,  users_at_capacity: 90,  peak_load: 0.60, base_latency_ms: 40, sinr_db: 9}
+
+# -----------------------------------------------------------------------------
+# Small committed sample dataset (scripts/make_sample_data.py): every cell, perfect 5-minute grid
+# -----------------------------------------------------------------------------
+sample:
+  n_sites: 20
+  start: "2026-02-24"                   # Tuesday
+  end: "2026-02-26"                     # exclusive -> 2 full days (Tue + Wed)
+  filename: sample_network_traffic.csv
+
+# -----------------------------------------------------------------------------
+# Congestion definition
+# Each indicator is mapped to a 0..1 sub-score:  clip((x - good) / (bad - good), 0, 1)
+#   x <= good -> 0 (healthy)   x >= bad -> 1 (severely degraded)
+# If good > bad the indicator is "lower is worse" (e.g. throughput per user).
+# score = (1 - max_blend) * weighted_mean(sub-scores) + max_blend * max(sub-scores)
+# The max term makes sure one severely degraded KPI cannot be averaged away.
+# -----------------------------------------------------------------------------
+labeling:
+  max_blend: 0.30
+  indicators:
+    bandwidth_utilization_pct:   {weight: 0.20, good: 60,  bad: 95}
+    latency_ms:                  {weight: 0.15, good: 45,  bad: 200}
+    packet_loss_pct:             {weight: 0.20, good: 0.5, bad: 4.0}
+    dl_throughput_per_user_mbps: {weight: 0.15, good: 2.0, bad: 0.3}
+    jitter_ms:                   {weight: 0.05, good: 5,   bad: 40}
+    dropped_call_rate_pct:       {weight: 0.10, good: 0.5, bad: 4.0}
+    retransmission_rate_pct:     {weight: 0.05, good: 2,   bad: 12}
+    handover_failure_rate_pct:   {weight: 0.05, good: 1,   bad: 6}
+    cpu_utilization_pct:         {weight: 0.05, good: 65,  bad: 95}
+  # score boundaries between states
+  thresholds:
+    warning: 0.25
+    congested: 0.45
+    critical: 0.70
