@@ -1,0 +1,426 @@
+{
+  "rows": 241700,
+  "period": [
+    "2026-01-01 00:00:00",
+    "2026-02-11 23:00:00"
+  ],
+  "data_note": "SIMULATED DATA - training period only",
+  "state_share_pct": {
+    "0": 86.57,
+    "1": 8.99,
+    "2": 3.78,
+    "3": 0.65
+  },
+  "timeseries_site": "CELL_006",
+  "congested_rate_pct_by_region": {
+    "business_district": 3.48,
+    "rural": 0.0,
+    "suburban": 0.14,
+    "urban_core": 14.48,
+    "urban_residential": 1.83
+  },
+  "congested_rate_pct_weekday_vs_weekend": {
+    "weekday": 5.9,
+    "weekend": 0.77
+  },
+  "top_congestion_hours": {
+    "20": 18.1,
+    "10": 14.75,
+    "11": 11.46,
+    "19": 10.75,
+    "21": 9.34,
+    "14": 9.34
+  },
+  "share_of_congestion_in_top6_hours_pct": 69.4,
+  "site_rate_pct_min_max": [
+    0.0,
+    21.56
+  ],
+  "spearman_with_score": {
+    "bandwidth_utilization_pct": 0.51,
+    "latency_ms": 0.12,
+    "packet_loss_pct": 0.5,
+    "download_throughput_mbps": 0.66,
+    "jitter_ms": 0.51,
+    "dropped_call_rate_pct": 0.5,
+    "retransmission_rate_pct": 0.49,
+    "handover_failure_rate_pct": 0.46,
+    "cpu_utilization_pct": 0.51,
+    "signal_quality_sinr_db": 0.35,
+    "active_users": 0.74,
+    "dl_throughput_per_user_mbps": -0.97
+  },
+  "latency_spearman_with_score": {
+    "pooled": 0.12,
+    "within_region": {
+      "business_district": 0.41,
+      "rural": 0.3,
+      "suburban": 0.18,
+      "urban_core": 0.88,
+      "urban_residential": 0.4
+    },
+    "median_latency_ms_by_region": {
+      "business_district": 18.9,
+      "rural": 47.3,
+      "suburban": 34.3,
+      "urban_core": 36.3,
+      "urban_residential": 26.5
+    }
+  },
+  "indicator_auc": [
+    {
+      "indicator": "bandwidth_utilization_pct",
+      "auc_pooled": 0.983,
+      "auc_within_site": 0.962,
+      "strength_within_site": 0.923,
+      "sites_used": 10
+    },
+    {
+      "indicator": "congestion_score",
+      "auc_pooled": 0.983,
+      "auc_within_site": 0.961,
+      "strength_within_site": 0.921,
+      "sites_used": 10
+    },
+    {
+      "indicator": "latency_ms",
+      "auc_pooled": 0.969,
+      "auc_within_site": 0.96,
+      "strength_within_site": 0.919,
+      "sites_used": 10
+    },
+    {
+      "indicator": "packet_loss_pct",
+      "auc_pooled": 0.981,
+      "auc_within_site": 0.959,
+      "strength_within_site": 0.918,
+      "sites_used": 10
+    },
+    {
+      "indicator": "active_users",
+      "auc_pooled": 0.977,
+      "auc_within_site": 0.959,
+      "strength_within_site": 0.917,
+      "sites_used": 10
+    },
+    {
+      "indicator": "dropped_call_rate_pct",
+      "auc_pooled": 0.981,
+      "auc_within_site": 0.958,
+      "strength_within_site": 0.917,
+      "sites_used": 10
+    },
+    {
+      "indicator": "jitter_ms",
+      "auc_pooled": 0.979,
+      "auc_within_site": 0.954,
+      "strength_within_site": 0.909,
+      "sites_used": 10
+    },
+    {
+      "indicator": "cpu_utilization_pct",
+      "auc_pooled": 0.98,
+      "auc_within_site": 0.954,
+      "strength_within_site": 0.908,
+      "sites_used": 10
+    },
+    {
+      "indicator": "retransmission_rate_pct",
+      "auc_pooled": 0.979,
+      "auc_within_site": 0.953,
+      "strength_within_site": 0.907,
+      "sites_used": 10
+    },
+    {
+      "indicator": "handover_failure_rate_pct",
+      "auc_pooled": 0.976,
+      "auc_within_site": 0.948,
+      "strength_within_site": 0.896,
+      "sites_used": 10
+    },
+    {
+      "indicator": "dl_throughput_per_user_mbps",
+      "auc_pooled": 0.048,
+      "auc_within_site": 0.073,
+      "strength_within_site": 0.855,
+      "sites_used": 10
+    },
+    {
+      "indicator": "download_throughput_mbps",
+      "auc_pooled": 0.945,
+      "auc_within_site": 0.901,
+      "strength_within_site": 0.802,
+      "sites_used": 10
+    },
+    {
+      "indicator": "signal_quality_sinr_db",
+      "auc_pooled": 0.491,
+      "auc_within_site": 0.179,
+      "strength_within_site": 0.642,
+      "sites_used": 10
+    }
+  ],
+  "suggested_peak_hours": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "transition_matrix": [
+    [
+      0.972,
+      0.027,
+      0.001,
+      0.0
+    ],
+    [
+      0.258,
+      0.589,
+      0.146,
+      0.006
+    ],
+    [
+      0.02,
+      0.348,
+      0.55,
+      0.082
+    ],
+    [
+      0.004,
+      0.096,
+      0.474,
+      0.426
+    ]
+  ],
+  "episodes": {
+    "count": 1490,
+    "median_min": 10.0,
+    "share_le_10min_pct": 51.1,
+    "p90_min": 105.0,
+    "max_min": 405.0
+  },
+  "persistence_accuracy": 0.9183,
+  "p_congested_in_H_given_now": 0.672,
+  "p_congested_in_H_given_not_now": 0.0152,
+  "new_congestion_share_of_future_events_pct": 32.8,
+  "onset_trajectory": {
+    "n_onsets": 594,
+    "bandwidth_utilization_pct": {
+      "t-60min": 73.12006245579795,
+      "t-30min": 77.96742454085151,
+      "t-10min": 81.43670199989896,
+      "onset": 86.33589678047478
+    },
+    "latency_ms": {
+      "t-60min": 47.32090726310667,
+      "t-30min": 55.21387116258159,
+      "t-10min": 64.44395372481826,
+      "onset": 85.46523048013553
+    },
+    "packet_loss_pct": {
+      "t-60min": 0.26149133933603164,
+      "t-30min": 0.3951275677301092,
+      "t-10min": 0.6466435211568963,
+      "onset": 1.2850020404234999
+    }
+  },
+  "spatial": {
+    "n_cells": 20,
+    "rate_vs_distance_spearman_pooled": -0.8136597127923421,
+    "rate_vs_distance_spearman_within_region": 0.09545728474100101,
+    "mean_hourly_congestion_corr_same_region_pairs": 0.182114046035734,
+    "mean_hourly_congestion_corr_different_region_pairs": 0.05080636573335712,
+    "corr_vs_distance_spearman_same_region_pairs_pooled_confounded": -0.8011490092559567,
+    "corr_vs_distance_spearman_same_region_pairs_region_controlled": -0.051255543884135515,
+    "mean_hourly_corr_by_region": {
+      "business_district": 0.2816595195018791,
+      "rural": -4.7288031399252907e-05,
+      "suburban": 0.29797576266446013,
+      "urban_core": 0.47155756088986084,
+      "urban_residential": 0.35426562264952355
+    },
+    "n_same_region_pairs": 38,
+    "cells": [
+      {
+        "site_id": "CELL_001",
+        "region": "rural",
+        "lat": 16.1988,
+        "lon": 80.573,
+        "rate": 0.0,
+        "dist_km": 16.9424
+      },
+      {
+        "site_id": "CELL_002",
+        "region": "rural",
+        "lat": 16.3047,
+        "lon": 80.4118,
+        "rate": 0.0001,
+        "dist_km": 12.8187
+      },
+      {
+        "site_id": "CELL_003",
+        "region": "rural",
+        "lat": 16.3865,
+        "lon": 80.602,
+        "rate": 0.0002,
+        "dist_km": 9.5068
+      },
+      {
+        "site_id": "CELL_004",
+        "region": "urban_residential",
+        "lat": 16.3588,
+        "lon": 80.5453,
+        "rate": 0.0084,
+        "dist_km": 2.7458
+      },
+      {
+        "site_id": "CELL_005",
+        "region": "rural",
+        "lat": 16.3866,
+        "lon": 80.5557,
+        "rate": 0.0,
+        "dist_km": 5.7784
+      },
+      {
+        "site_id": "CELL_006",
+        "region": "urban_core",
+        "lat": 16.3543,
+        "lon": 80.5229,
+        "rate": 0.2156,
+        "dist_km": 1.165
+      },
+      {
+        "site_id": "CELL_007",
+        "region": "rural",
+        "lat": 16.4874,
+        "lon": 80.4682,
+        "rate": 0.0,
+        "dist_km": 17.0518
+      },
+      {
+        "site_id": "CELL_008",
+        "region": "suburban",
+        "lat": 16.306,
+        "lon": 80.5212,
+        "rate": 0.0026,
+        "dist_km": 4.235
+      },
+      {
+        "site_id": "CELL_009",
+        "region": "urban_core",
+        "lat": 16.3513,
+        "lon": 80.5143,
+        "rate": 0.1391,
+        "dist_km": 1.3786
+      },
+      {
+        "site_id": "CELL_010",
+        "region": "urban_residential",
+        "lat": 16.3631,
+        "lon": 80.5665,
+        "rate": 0.0247,
+        "dist_km": 4.9423
+      },
+      {
+        "site_id": "CELL_011",
+        "region": "business_district",
+        "lat": 16.3507,
+        "lon": 80.5235,
+        "rate": 0.0034,
+        "dist_km": 0.7595
+      },
+      {
+        "site_id": "CELL_012",
+        "region": "urban_core",
+        "lat": 16.3324,
+        "lon": 80.5306,
+        "rate": 0.2007,
+        "dist_km": 1.4334
+      },
+      {
+        "site_id": "CELL_013",
+        "region": "urban_residential",
+        "lat": 16.3263,
+        "lon": 80.5481,
+        "rate": 0.0217,
+        "dist_km": 3.1789
+      },
+      {
+        "site_id": "CELL_014",
+        "region": "rural",
+        "lat": 16.2278,
+        "lon": 80.5575,
+        "rate": 0.0,
+        "dist_km": 13.3825
+      },
+      {
+        "site_id": "CELL_015",
+        "region": "business_district",
+        "lat": 16.3381,
+        "lon": 80.5164,
+        "rate": 0.0466,
+        "dist_km": 1.1026
+      },
+      {
+        "site_id": "CELL_016",
+        "region": "urban_core",
+        "lat": 16.3518,
+        "lon": 80.5264,
+        "rate": 0.1338,
+        "dist_km": 0.8883
+      },
+      {
+        "site_id": "CELL_017",
+        "region": "rural",
+        "lat": 16.394,
+        "lon": 80.6796,
+        "rate": 0.0,
+        "dist_km": 17.4361
+      },
+      {
+        "site_id": "CELL_018",
+        "region": "urban_core",
+        "lat": 16.3414,
+        "lon": 80.533,
+        "rate": 0.0346,
+        "dist_km": 0.9317
+      },
+      {
+        "site_id": "CELL_019",
+        "region": "suburban",
+        "lat": 16.3945,
+        "lon": 80.5487,
+        "rate": 0.0003,
+        "dist_km": 6.1694
+      },
+      {
+        "site_id": "CELL_020",
+        "region": "business_district",
+        "lat": 16.3377,
+        "lon": 80.5144,
+        "rate": 0.0544,
+        "dist_km": 1.2986
+      }
+    ]
+  },
+  "figures": {
+    "timeseries": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\01_timeseries_kpis.png",
+    "distribution": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\02_congestion_distribution.png",
+    "by_time": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\03_congestion_by_hour_day.png",
+    "by_site": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\04_congestion_by_site.png",
+    "correlation": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\05_correlation.png",
+    "peak": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\06_peak_hour_behavior.png",
+    "dists": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\07_feature_distributions.png",
+    "temporal": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\08_temporal_structure.png",
+    "onset": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\09_onset_trajectory.png",
+    "cell_map": "Q:\\Network-Congestion\\ai-network-congestion-prediction\\reports\\figures\\09a_cell_map.png"
+  }
+}
