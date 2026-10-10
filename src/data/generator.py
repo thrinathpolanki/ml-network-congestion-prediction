@@ -161,7 +161,10 @@ def _simulate_site(
 
     latency = (base_lat + 9.0 * uq / (1.02 - uq) + 25.0 * p) * ln(0.08)
     packet_loss = (0.03 + 0.15 * u**2 + 2.6 * p**1.4) * ln(0.25)
-    jitter = (1.2 + 0.12 * (latency - base_lat) + 0.5 * p) * ln(0.15)
+    jitter = np.maximum(
+    1.2 + 0.12 * (latency - base_lat) + 0.5 * p,
+    0.0
+) * ln(0.15)
     dropped = (0.10 + 0.35 * u**2 + 2.6 * p**1.5) * ln(0.20)
     handover = (0.30 + 0.50 * u**2 + 2.0 * p) * ln(0.25)
     retrans = (0.60 + 1.50 * u**2 + 4.5 * p) * ln(0.20)
