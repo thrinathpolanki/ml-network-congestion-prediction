@@ -4,6 +4,19 @@
 
 ---
 
+## 📁 What Was Added
+
+| File | Purpose |
+| --- | --- |
+| `src/preprocessing/cleaning.py` | The full cleaning pipeline, returning a report |
+| `src/preprocessing/splitting.py` | Chronological split with target purging |
+| `src/preprocessing/scaling.py` | `FeatureTransformer`: scaling and one-hot encoding, fitted on train only, saved with joblib |
+| `src/pipeline/prepare.py`, `scripts/prepare_data.py` | End-to-end run: clean → label → split → report |
+| `tests/test_preprocessing.py` | 15 new tests (35 total) |
+| `configs/config.yaml` | Updated with `preprocessing:` settings |
+
+---
+
 ## ⚙️ Commands Executed
 
 ### Step 1: Install scikit-learn
