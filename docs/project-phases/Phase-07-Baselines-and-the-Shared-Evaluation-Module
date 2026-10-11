@@ -1,0 +1,79 @@
+# 🚀 Phase 7: Baselines and the Shared Evaluation Module
+
+**Project:** Network Congestion Prediction & Alert System
+
+---
+
+## 📁 What Was Added
+
+| File | Purpose |
+| --- | --- |
+| `src/models/evaluate.py` | The shared evaluation module. Every model is scored here, including XGBoost and the LSTM later |
+| `src/models/baselines.py` | Four baseline types, five models in all |
+| `scripts/run_baselines.py` | Fits the baselines on train and evaluates on val and test |
+| `tests/test_evaluate.py`, `tests/test_baselines.py` | 20 new tests (77 total, all passing) |
+
+Modified: `configs/config.yaml`
+
+---
+
+## ⚙️ Commands Executed
+
+### Step 1: Run automated tests
+
+```powershell
+python -m pytest -q
+```
+
+**Result:**
+
+```text
+..................................................................................................                                   [100%]
+98 passed in 21.09s
+```
+
+### Step 2: Run the baselines
+
+```powershell
+python scripts/run_baselines.py
+```
+
+**Result:**
+
+```text
+=== BASELINES on VAL (51,700 rows; SIMULATED DATA) ===
+                     model  accuracy  macro_f1  cong_precision  cong_recall  cong_f1  pr_auc  recall_new_onset  event_recall  false_alerts_per_site_day
+            Majority class     0.856     0.231           0.000        0.000    0.000   0.051             0.000         0.000                      0.000
+Threshold rule (bandwidth)     0.908     0.641           0.643        0.730    0.684   0.746             0.157         0.515                      1.153
+   Persistence (state now)     0.914     0.644           0.681        0.681    0.681   0.752             0.000         0.398                      0.930
+       Seasonal naive (1d)     0.873     0.466           0.406        0.394    0.400   0.378             0.333         0.444                      1.097
+       Seasonal naive (7d)     0.888     0.486           0.480        0.482    0.481   0.455             0.419         0.561                      0.958
+95% CI (day-block bootstrap):
+                     model  macro_f1_ci95 cong_recall_ci95
+            Majority class [0.227, 0.235]   [0.000, 0.000]
+Threshold rule (bandwidth) [0.607, 0.657]   [0.655, 0.781]
+   Persistence (state now) [0.610, 0.659]   [0.598, 0.742]
+       Seasonal naive (1d) [0.397, 0.541]   [0.274, 0.552]
+       Seasonal naive (7d) [0.448, 0.513]   [0.372, 0.582]
+
+=== BASELINES on TEST (51,840 rows; SIMULATED DATA) ===
+                     model  accuracy  macro_f1  cong_precision  cong_recall  cong_f1  pr_auc  recall_new_onset  event_recall  false_alerts_per_site_day
+            Majority class     0.881     0.234           0.000        0.000    0.000   0.040             0.000         0.000                      0.000
+Threshold rule (bandwidth)     0.921     0.620           0.629        0.711    0.667   0.698             0.157         0.493                      0.739
+   Persistence (state now)     0.927     0.614           0.660        0.659    0.659   0.700             0.000         0.390                      0.483
+       Seasonal naive (1d)     0.881     0.442           0.357        0.436    0.393   0.319             0.379         0.459                      0.978
+       Seasonal naive (7d)     0.899     0.467           0.457        0.452    0.454   0.424             0.359         0.452                      0.761
+95% CI (day-block bootstrap):
+                     model  macro_f1_ci95 cong_recall_ci95
+            Majority class [0.229, 0.240]   [0.000, 0.000]
+Threshold rule (bandwidth) [0.588, 0.639]   [0.688, 0.727]
+   Persistence (state now) [0.576, 0.641]   [0.632, 0.676]
+       Seasonal naive (1d) [0.372, 0.490]   [0.262, 0.562]
+       Seasonal naive (7d) [0.419, 0.485]   [0.307, 0.541]
+
+Fitted utilisation cut-offs (Warning / Congested / Critical): [71.2, 84.3, 91.3]
+
+Saved to ai-network-congestion-prediction\reports/baseline_*.csv|json
+```
+
+Generated `baseline_comparison_test.csv`, `baseline_comparison_val.csv`, and `baseline_results.json` in the `reports` folder.
