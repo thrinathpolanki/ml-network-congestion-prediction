@@ -1,0 +1,63 @@
+{
+  "n_features": 158,
+  "features_per_group": {
+    "current_kpis": 15,
+    "lags": 25,
+    "rate_of_change": 15,
+    "rolling": 60,
+    "ewm": 10,
+    "congestion_history": 10,
+    "calendar_now": 7,
+    "calendar_forecast_time": 4,
+    "site_static": 4,
+    "site_relative": 3,
+    "region_onehot": 5
+  },
+  "required_history_steps": 73,
+  "rows_dropped_incomplete_features": 701,
+  "baselines_fitted_on_rows_before": "2026-02-11 23:35:00",
+  "split": {
+    "boundaries": {
+      "train_end_exclusive": "2026-02-11 23:35:00",
+      "val_end_exclusive": "2026-02-20 23:30:00",
+      "purge_steps": 6
+    },
+    "purged_rows": {
+      "train": 120,
+      "val": 120
+    },
+    "train": {
+      "rows": 240999,
+      "start": "2026-01-01 02:55:00",
+      "end": "2026-02-11 23:00:00",
+      "target_distribution": {
+        "0": 0.8654,
+        "1": 0.0902,
+        "2": 0.0379,
+        "3": 0.0065
+      }
+    },
+    "val": {
+      "rows": 51700,
+      "start": "2026-02-11 23:35:00",
+      "end": "2026-02-20 22:55:00",
+      "target_distribution": {
+        "0": 0.8556,
+        "1": 0.0932,
+        "2": 0.0445,
+        "3": 0.0067
+      }
+    },
+    "test": {
+      "rows": 51840,
+      "start": "2026-02-20 23:30:00",
+      "end": "2026-03-01 23:25:00",
+      "target_distribution": {
+        "0": 0.8806,
+        "1": 0.0798,
+        "2": 0.0354,
+        "3": 0.0043
+      }
+    }
+  }
+}
