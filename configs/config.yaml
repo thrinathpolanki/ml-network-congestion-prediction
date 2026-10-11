@@ -148,3 +148,16 @@ features:
   peak_hours: [8, 9, 10, 11, 12, 13, 14, 18, 19, 20, 21, 22]
   processed_prefix: features      # -> data/processed/features_{train,val,test}.parquet
   builder_filename: feature_builder.joblib
+
+# -----------------------------------------------------------------------------
+# Evaluation + baselines
+# -----------------------------------------------------------------------------
+evaluation:
+  min_event_steps: 3          # a "congestion event" = >= 3 consecutive congested target steps (15 min)
+  event_grace_steps: 3        # event counts as detected if flagged within its first 3 forecast rows
+  bootstrap_samples: 300      # day-block bootstrap for confidence intervals
+  bootstrap_seed: 42
+
+baselines:
+  threshold_feature: bandwidth_utilization_pct   # single-KPI rule, cut-offs fitted on TRAIN only
+  seasonal_days: [1, 7]                          # "same time yesterday" / "same time last week"
