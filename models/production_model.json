@@ -1,0 +1,14 @@
+{
+  "model": "hybrid",
+  "reason": "hybrid beats xgboost by >= 2.0 pooled seed-SDs on at least one validation criterion without being clearly worse on the other.",
+  "selected_on": "validation",
+  "decided_before_test_scoring": true,
+  "decided_at_utc": "2026-10-12T00:14:26+00:00",
+  "seeds": [
+    42,
+    43,
+    44,
+    45
+  ],
+  "data_note": "Selected on SIMULATED data."
+}
