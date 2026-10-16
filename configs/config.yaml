@@ -198,3 +198,27 @@ xgboost:
     grid_min: 0.02
     grid_max: 0.98
     grid_points: 97
+
+# -----------------------------------------------------------------------------
+# LSTM (PyTorch, CPU)
+# -----------------------------------------------------------------------------
+lstm:
+  seq_len: 36                     # past steps fed to the network (36 x 5 min = 3 h); must be <= 36 to keep XGBoost's rows
+  hidden_size: 64
+  num_layers: 1
+  dropout: 0.2
+  batch_size: 512
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  max_epochs: 20
+  patience: 4                     # early stopping on weighted validation loss
+  windows_per_epoch: 120000       # random subset of training windows per epoch (null = all); bounds CPU time
+  class_weight_power: 0.5         # same imbalance handling as XGBoost
+  num_threads: null               # null = torch default
+  calibration: isotonic
+  threshold: {beta: 2.0, grid_min: 0.02, grid_max: 0.98, grid_points: 97}
+  model_filename: lstm_congestion.pt
+  checkpoint_filename: lstm_checkpoint.pt
+  meta_filename: lstm_meta.json
+  scaler_filename: lstm_scaler.joblib
