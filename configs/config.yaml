@@ -222,3 +222,15 @@ lstm:
   checkpoint_filename: lstm_checkpoint.pt
   meta_filename: lstm_meta.json
   scaler_filename: lstm_scaler.joblib
+
+# -----------------------------------------------------------------------------
+# Model comparison (Phase 10)
+# -----------------------------------------------------------------------------
+comparison:
+  seeds: [42, 43, 44, 45]          # training seeds per model (data is the same single simulated dataset)
+  taus: [0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+  operator_fa_range: [0.2, 1.0]    # false alerts per site-day over which event recall is averaged
+  z_min: 2.0                       # a challenger must beat the default by >= z_min pooled seed-SDs
+  default_model: xgboost           # simplest robust option when evidence is a tie
+  latency_requests: 100            # single-site requests timed end to end
+  test_lock_file: test_results.json  # test set is scored once; delete deliberately to re-run
