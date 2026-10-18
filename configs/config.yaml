@@ -234,3 +234,64 @@ comparison:
   default_model: xgboost           # simplest robust option when evidence is a tie
   latency_requests: 100            # single-site requests timed end to end
   test_lock_file: test_results.json  # test set is scored once; delete deliberately to re-run
+
+# -----------------------------------------------------------------------------
+# Serving + risk engine
+# -----------------------------------------------------------------------------
+serving:
+  model: auto                       # auto = models/production_model.json | xgboost | lstm
+  default_model: lstm               # used when production_model.json is missing
+
+risk:
+  # Reported probabilities are bounded: calibration saturates at exactly 0/1 where the validation data had no counter-examples,
+  # but on unseen data p >= 0.99 was right only ~91-93 % of the time. Never claim certainty.
+  probability_bounds: [0.001, 0.99]
+  # Risk level from the CALIBRATED probability that the cell is Congested/Critical at t + horizon.
+  # 'auto' = the model's validated alert threshold (tau), so MEDIUM and above == "model says congested".
+  levels: {medium: auto, high: 0.40, critical: 0.70}
+  actions:
+    LOW: "No action required. Continue routine monitoring."
+    MEDIUM: "Elevated risk. Watch the cell closely and review capacity headroom for the next intervals."
+    HIGH: "Consider proactive capacity optimization (load balancing, traffic steering, QoS review)."
+    CRITICAL: "Prioritise now: congestion is very likely. Consider immediate capacity relief and operator escalation."
+
+# -----------------------------------------------------------------------------
+# Alerting
+# -----------------------------------------------------------------------------
+alerts:
+  severity_map: {MEDIUM: WARNING, HIGH: HIGH, CRITICAL: CRITICAL}   # risk level -> alert severity; LOW -> no alert
+  confirm_steps: 2                  # consecutive risky predictions before a NEW alert is raised (debounce)
+  critical_bypasses_debounce: true  # a CRITICAL prediction alerts immediately
+  cooldown_minutes: 60              # minimum gap between notifications about an unchanged situation
+  send_reminders: true              # one reminder per cooldown while the risk persists
+  recovery_steps: 3                 # consecutive LOW predictions before "recovered" is sent
+  rearm_minutes: 15                 # after recovery, a WARNING cannot re-raise for this long (HIGH/CRITICAL can)
+  notify_deescalation: false
+  history_size: 1000                # alerts kept in memory for the API/dashboard
+  persist_path: logs/alerts.jsonl   # append-only alert history (null = off)
+  state_path: logs/alert_state.json # engine state snapshot saved on shutdown, restored on startup (null = off)
+  notifiers:                        # each also needs its environment variables (see .env.example)
+    log: {enabled: true}
+    webhook: {enabled: true, min_severity: HIGH, timeout_seconds: 5}
+    email: {enabled: true, min_severity: CRITICAL, timeout_seconds: 10}
+  phrases: {WARNING: "Elevated congestion probability", HIGH: "High congestion probability", CRITICAL: "Very high congestion probability"}
+  messages:
+    RAISED: "{severity}: {phrase} predicted for {site_id} within the next {horizon_minutes} minutes (probability {probability_pct})."
+    ESCALATED: "{severity}: Risk escalated for {site_id}. {phrase} within the next {horizon_minutes} minutes (probability {probability_pct})."
+    REMINDER: "{severity}: Risk persists for {site_id}. {phrase} within the next {horizon_minutes} minutes (probability {probability_pct}); first raised {duration_minutes} min ago."
+    DEESCALATED: "{severity}: Risk for {site_id} has eased but remains elevated. {phrase} within the next {horizon_minutes} minutes (probability {probability_pct})."
+    RECOVERED: "INFO: Congestion risk for {site_id} has returned to normal after {duration_minutes} min (peak severity {peak_severity})."
+
+# -----------------------------------------------------------------------------
+# API
+# -----------------------------------------------------------------------------
+api:
+  version: "1.0.0"
+  host: 0.0.0.0
+  port: 8000
+  max_readings_per_request: 5000
+  buffer_per_site: 600              # readings kept per site for /readings streaming (600 x 5 min = 50 h)
+  prediction_log_per_site: 600
+  api_key_env: API_KEY              # if this environment variable is set, all endpoints except /health require header X-API-Key
+  cors_origins: []                  # e.g. ["http://localhost:8501"]
+  fail_fast_on_model_error: false   # false: start in degraded mode so /health can explain what is wrong
