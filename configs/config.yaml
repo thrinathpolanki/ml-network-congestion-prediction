@@ -243,9 +243,6 @@ serving:
   default_model: lstm               # used when production_model.json is missing
 
 risk:
-  # Reported probabilities are bounded: calibration saturates at exactly 0/1 where the validation data had no counter-examples,
-  # but on unseen data p >= 0.99 was right only ~91-93 % of the time. Never claim certainty.
-  probability_bounds: [0.001, 0.99]
   # Risk level from the CALIBRATED probability that the cell is Congested/Critical at t + horizon.
   # 'auto' = the model's validated alert threshold (tau), so MEDIUM and above == "model says congested".
   levels: {medium: auto, high: 0.40, critical: 0.70}
@@ -281,17 +278,3 @@ alerts:
     REMINDER: "{severity}: Risk persists for {site_id}. {phrase} within the next {horizon_minutes} minutes (probability {probability_pct}); first raised {duration_minutes} min ago."
     DEESCALATED: "{severity}: Risk for {site_id} has eased but remains elevated. {phrase} within the next {horizon_minutes} minutes (probability {probability_pct})."
     RECOVERED: "INFO: Congestion risk for {site_id} has returned to normal after {duration_minutes} min (peak severity {peak_severity})."
-
-# -----------------------------------------------------------------------------
-# API
-# -----------------------------------------------------------------------------
-api:
-  version: "1.0.0"
-  host: 0.0.0.0
-  port: 8000
-  max_readings_per_request: 5000
-  buffer_per_site: 600              # readings kept per site for /readings streaming (600 x 5 min = 50 h)
-  prediction_log_per_site: 600
-  api_key_env: API_KEY              # if this environment variable is set, all endpoints except /health require header X-API-Key
-  cors_origins: []                  # e.g. ["http://localhost:8501"]
-  fail_fast_on_model_error: false   # false: start in degraded mode so /health can explain what is wrong
