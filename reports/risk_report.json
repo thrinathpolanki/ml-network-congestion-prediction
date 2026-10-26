@@ -1,0 +1,83 @@
+{
+  "model": "hybrid",
+  "levels": [
+    {
+      "split": "test",
+      "risk_level": "LOW",
+      "rows": 48067,
+      "mean_predicted_prob": 0.0026681588986101636,
+      "observed_congestion_rate": 0.0022676680466848357
+    },
+    {
+      "split": "test",
+      "risk_level": "MEDIUM",
+      "rows": 1461,
+      "mean_predicted_prob": 0.25695872471100994,
+      "observed_congestion_rate": 0.216290212183436
+    },
+    {
+      "split": "test",
+      "risk_level": "HIGH",
+      "rows": 1355,
+      "mean_predicted_prob": 0.5368743907899641,
+      "observed_congestion_rate": 0.5852398523985239
+    },
+    {
+      "split": "test",
+      "risk_level": "CRITICAL",
+      "rows": 957,
+      "mean_predicted_prob": 0.8924441051132664,
+      "observed_congestion_rate": 0.8766980146290491
+    },
+    {
+      "split": "val",
+      "risk_level": "LOW",
+      "rows": 46871,
+      "mean_predicted_prob": 0.0030509270124383947,
+      "observed_congestion_rate": 0.0030509270124383947
+    },
+    {
+      "split": "val",
+      "risk_level": "MEDIUM",
+      "rows": 1967,
+      "mean_predicted_prob": 0.2597864768683274,
+      "observed_congestion_rate": 0.2597864768683274
+    },
+    {
+      "split": "val",
+      "risk_level": "HIGH",
+      "rows": 1591,
+      "mean_predicted_prob": 0.5292269013199246,
+      "observed_congestion_rate": 0.5292269013199246
+    },
+    {
+      "split": "val",
+      "risk_level": "CRITICAL",
+      "rows": 1271,
+      "mean_predicted_prob": 0.90558615263572,
+      "observed_congestion_rate": 0.90558615263572
+    }
+  ],
+  "calibration": {
+    "test": {
+      "ece": 0.0011575728759764263,
+      "brier": 0.014939149118114729
+    },
+    "val": {
+      "ece": 0.00019888983552596355,
+      "brier": 0.01894178518862644
+    }
+  },
+  "serving_parity": {
+    "rows_compared": 51840,
+    "mean_abs_prob_diff": 0.00016196742513848301,
+    "p99_abs_prob_diff": 0.00019338619222587506,
+    "max_abs_prob_diff": 0.28413199426111907,
+    "share_rows_diff_gt_0.01": 0.003761574074074074,
+    "share_rows_diff_gt_0.05": 0.000925925925925926,
+    "congested_decision_agreement": 0.9997878086419754,
+    "risk_level_agreement": 0.9994791666666667,
+    "pr_auc_offline_path": 0.7877697710138232,
+    "pr_auc_online_path": 0.7876464367936585
+  }
+}
